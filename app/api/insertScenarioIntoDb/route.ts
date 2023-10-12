@@ -6,11 +6,9 @@ const supabase = createServerComponentClient({cookies})
 
 export async function POST(req: Request, res: Response) {
 
-    const { dbPayload } = await req.json()
+    const { formData } = await req.json()
 
-    const {title, description, category, unhealthyConvo, healthyConvo,} = dbPayload
-    
-    console.log(unhealthyConvo)
+    const {title, description, category, unhealthyConvo, healthyConvo,} = formData
 
     try {
         

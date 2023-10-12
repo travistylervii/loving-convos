@@ -11,6 +11,8 @@ export default async function ScenarioGrid() {
     return <>Not Found</>;
   }
 
+  console.log(data)
+
   return (
     <>
       <div className="grid grid-cols-2 py-10 gap-5 max-w-5xl mx-auto">

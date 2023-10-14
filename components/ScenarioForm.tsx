@@ -20,9 +20,6 @@ const ScenarioForm = (props) => {
 
   const onSubmitDb: SubmitHandler<Input> = async (formData) => {
 
-    console.log(formData)
-
-    console.log("starting insertScenarioIntoDb Api")
 
     const dbRes = await fetch('/api/insertScenarioIntoDb', {
 
@@ -40,7 +37,6 @@ const ScenarioForm = (props) => {
         return <>Not ok</>
     }
 
-    console.log("Inserted")
 
     
   };
@@ -63,7 +59,7 @@ const ScenarioForm = (props) => {
 
   return (
     <>
-      <div className="max-w-2xl">
+      <div>
         <form onSubmit={handleSubmit(onSubmitDb)}>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">

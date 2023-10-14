@@ -96,8 +96,8 @@ const ConvoModal = (props) => {
 
                             <hr className="my-8"  />
                             <div className="text-sm">
-                              <h4 className="text-lg leading-6 font-bold">
-                              {unhealthyconvo.breakdown.header && unhealthyconvo.breakdown.header}
+                              <h4 className="text-lg leading-6 font-bold mb-5">
+                              This conversation showcases several elements of an unhealthy conversation:
                               </h4>
                               <ul className="list-disc pl-5">
                                 {unhealthyconvo.breakdown.points.map((point) => {
@@ -111,8 +111,9 @@ const ConvoModal = (props) => {
                                   );
                                 })}
                               </ul>
+                              <h4 className="text-lg leading-6 font-bold mt-5 mb-1">In Summary:</h4>
                               <p>
-                                {unhealthyconvo.breakdown.footer && unhealthyconvo.breakdown.footer}
+                                {unhealthyconvo.breakdown.summary && unhealthyconvo.breakdown.summary}
                               </p>
                             </div>
                           </div>
@@ -163,8 +164,8 @@ const ConvoModal = (props) => {
 
                             <hr className="my-8" />
                             <div className="text-sm">
-                              <h4 className="text-lg leading-6 font-bold">
-                              {healthyconvo.breakdown.header && healthyconvo.breakdown.header}
+                            <h4 className="text-lg leading-6 font-bold mb-5">
+                              This conversation showcases several elements of a healthy conversation:
                               </h4>
                               <ul className="list-disc pl-5">
                                 {healthyconvo.breakdown.points.map((point) => {
@@ -178,8 +179,10 @@ const ConvoModal = (props) => {
                                   );
                                 })}
                               </ul>
+                              
+                              <h4 className="text-lg leading-6 font-bold mt-5 mb-1">In Summary:</h4>
                               <p>
-                                {healthyconvo.breakdown.footer && healthyconvo.breakdown.footer}
+                                {healthyconvo.breakdown.summary && healthyconvo.breakdown.summary}
                               </p>
                             </div>
                           </div>

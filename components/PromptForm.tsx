@@ -4,18 +4,20 @@ import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface Input {
-    prompt: string;
+  prompt: string;
 }
 
 const PromptForm = (props) => {
+  const { setScenarioData } = props;
 
-    const {setScenarioData} = props;
-
-  const { register, handleSubmit, formState: { errors }, } = useForm<Input>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Input>();
 
   const onSubmitPrompt: SubmitHandler<Input> = async (inputData) => {
-
-    const {prompt} = inputData
+    const { prompt } = inputData;
 
     const scenarioRes = await fetch("/api/generateScenario", {
       method: "POST",
@@ -37,19 +39,17 @@ const PromptForm = (props) => {
     const finalPayload = {
       title: completionData.scenarioTitle,
       description: completionData.scenarioDescription,
-      category: '',
+      category: "",
       unhealthyConvo: completionData.unhealthyConvoData,
       healthyConvo: completionData.healthyConvoData,
     };
 
-    setScenarioData(finalPayload)
-
+    setScenarioData(finalPayload);
   };
-
 
   return (
     <>
-      <div className="container mx-auto">
+      <div>
         <form onSubmit={handleSubmit(onSubmitPrompt)}>
           <div className="sm:col-span-6">
             <label

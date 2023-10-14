@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const unhealthySystemPrompt = `Your purpose is to simulate a conversation between a couple named "David" and "Emma". The conversations center around conflicting conversation and simulating an unhealthy conversations. The purpose of this to show the viewer what a disfunctional unhealthy couple converation looks like. After you simulate the conversation break down into points as to why each scenario is unhealthy.
-`
-const healthySystemPrompt = `Your purpose is to simulate a conversation between a couple named "David" and "Emma". The conversations center around a conversation where the couple resolves conflict in a healthy manner. The purpose of this to show the viewer what a healthy couple relationship converation looks like. After you simulate the conversation break down into points as to why each scenario is healthy.
-`
-
-const unhealthyConvoJsonExample = `
+const unhealthySystemPrompt = `Your purpose is to take the user prompt scenario and create a simulated conversation between a couple named "David" and "Emma" using that user prompt as the central topic. The conversation will be an unhealthy / toxic conversation where David and Emma fail to resolve the conflict in a healthy manner. The purpose of this to show the user what a unhealthy couple relationship converation looks like. Make the conversation as real and natural sounding as possible to model a real life scenario. After you simulate the conversation break down into points and summary as to why each scenario is healthy. Return the data exactly like this JSON structure example below but replacing the values with the new data created: 
 {
     "convo": [
         {
@@ -59,10 +54,11 @@ const unhealthyConvoJsonExample = `
         ],
         "summary": "In summary, Emma and David's dialogue exemplifies the pitfalls of unhealthy communication, marked by accusations, defensiveness, and lack of genuine understanding. Their conversation underscores the importance of trust, validation, and open dialogue in nurturing a strong relationship."
     }
-},
-`
+}
 
-const healthyConvoJsonExample = `
+
+`
+const healthySystemPrompt = `Your purpose is to take the user prompt scenario and create a simulated conversation between a couple named "David" and "Emma" using that user prompt as the central topic. The conversation will be a healthy conversation where David and Emma resolve the conflict in a healthy manner. The purpose of this to show the user what a healthy couple relationship converation looks like. Make the conversation as real and natural sounding as possible to model a real life scenario. After you simulate the conversation break down into points and summary as to why each scenario is healthy. Return the data exactly like this JSON structure example below but replacing the values with the new data created:
 {
     "convo": [
         {
@@ -118,6 +114,8 @@ const healthyConvoJsonExample = `
 }
 `
 
+
+
 const openai = new OpenAI({
   apiKey: process.env.OPEN_API_KEY,
 });
@@ -132,9 +130,6 @@ const scenarioUserPrompt = prompt
 
   try {
 
-    //Create a prompt geenrating a unhealthy conversation
-    const unhealthyPrompt = `Create an unhealthy conversation about this scenario: ${scenarioUserPrompt}. Return the data exactly like this JSON structure example but replacing the values with the new data created: ${unhealthyConvoJsonExample}`
-
     const chatCompletion1 = await openai.chat.completions.create({  
         model: "gpt-4",
         messages: [
@@ -144,7 +139,7 @@ const scenarioUserPrompt = prompt
             },
             {
             role: "user",
-            content: unhealthyPrompt,
+            content: scenarioUserPrompt,
             },
         ],
         // temperature: 1,
@@ -156,8 +151,6 @@ const scenarioUserPrompt = prompt
 
     const unhealthyConvoData = chatCompletion1.choices[0].message.content;
 
-    const healthyPrompt = `Create an healthy conversation about this scenario: ${scenarioUserPrompt}. Return the data exactly like this JSON structure example but replacing the values with the new data created: ${healthyConvoJsonExample}`
-
     const chatCompletion2 = await openai.chat.completions.create({  
         model: "gpt-4",
         messages: [
@@ -167,7 +160,7 @@ const scenarioUserPrompt = prompt
             },
             {
             role: "user",
-            content: healthyPrompt,
+            content: scenarioUserPrompt,
             },
         ],
         // temperature: 1,
@@ -180,10 +173,47 @@ const scenarioUserPrompt = prompt
     const healthyConvoData = chatCompletion2.choices[0].message.content;
 
     //Create a healthy title and description
+    const chatCompletion3 = await openai.chat.completions.create({  
+        model: "gpt-4",
+        messages: [
+            {
+                "role": 'system',
+                "content": `Create a title (less than 4 words) and description (less than 20 words) based on the user content and return the data in this JSON format example. Ignore the values in the example, just use the structure: 
+                {
+                    "title": 'Impulse Spending',
+                    "description: 'In this scenario, David and Emma have a conversation about impulse spending in their relationship'
+                }   
+                `
+            },
+            {
+            role: "user",
+            content: healthyConvoData,
+            },
+        ],
+        // temperature: 1,
+        // max_tokens: 8000,
+        // top_p: 1,
+        // frequency_penalty: 0,
+        // presence_penalty: 0,
+    });
+
+    if(!chatCompletion3) {
+        throw new Error()
+    }
+
+    const chatCompletion3Data = chatCompletion3.choices[0].message.content
+
+    if(!chatCompletion3Data) {
+        throw new Error()
+    }
+
+    const parsedCompletion3 = JSON.parse(chatCompletion3Data)
+
+
 
     const payloadData = {
-        scenarioTitle: 'Example Title',
-        scenarioDescription: 'Example Description',
+        scenarioTitle: parsedCompletion3.title,
+        scenarioDescription: parsedCompletion3.description,
         healthyConvoData: healthyConvoData,
         unhealthyConvoData: unhealthyConvoData
     }

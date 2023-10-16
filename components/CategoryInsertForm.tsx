@@ -21,8 +21,6 @@ const CategoryInsertForm = () => {
             slug: data.slug,
         }
 
-        console.log(formPayload)
-
         const res = await fetch('/api/insertCategoryinDb', {
             method: 'POST',
             headers: {

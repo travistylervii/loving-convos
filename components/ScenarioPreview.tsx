@@ -40,7 +40,7 @@ const ConvoDisplay = (props) => {
 
   return (
     <>
-        <h1 className="text-2xl text-center mb-2">{previewData.title} (#{previewData.category})</h1>
+        <h1 className="text-2xl text-center mb-2">{previewData.title}</h1>
         <p className="text-center mb-3">{previewData.description}</p>
       <div className="grid grid-cols-2 divide-x divide-slate-300 border border-slate-200 p-10 rounded-md">
         <div className="col-span-1 px-6">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PromptForm from "@/components/PromptForm";
-import ScenarioFormPreview from "@/components/ScenarioFormPreview";
+import ScenarioFormPreview from "@/components/ScenarioAddFormPreview";
 
 const AddScenario = () => {
   const [scenarioData, setScenarioData] = useState({

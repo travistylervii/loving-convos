@@ -178,7 +178,7 @@ const scenarioUserPrompt = prompt
         messages: [
             {
                 "role": 'system',
-                "content": `Create a title (less than 4 words) and description (less than 20 words) based on the user content and return the data in this JSON format example. Ignore the values in the example, just use the structure: 
+                "content": `Create a title (less than 4 words) and description (less than 20 words) based on the user content and return the data in this JSON format example. Ignore the values in the example, just use the objext structure: 
                 {
                     "title": 'Impulse Spending',
                     "description: 'In this scenario, David and Emma have a conversation about impulse spending in their relationship'

@@ -8,7 +8,6 @@ export async function POST(req: Request, res: Response) {
     const { formData } = await req.json()
     const {title, description, categories, unhealthyconvo, healthyconvo,} = formData
 
-    console.log(categories)
     
     const supabase = createServerComponentClient({cookies})
     
@@ -32,7 +31,6 @@ export async function POST(req: Request, res: Response) {
             throw Error()
         }
 
-        console.log(scenarioData)
 
         const scenarioId = scenarioData.id
         
@@ -46,7 +44,6 @@ export async function POST(req: Request, res: Response) {
 
         })
 
-        console.log(categoryPayload)
 
         //Insert scanario id and category ids into junction table
         const {data: junctionData, error: juctionError} = await supabase 

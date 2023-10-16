@@ -8,7 +8,9 @@ export async function GET(req: Request, res: Response) {
 
     try {
 
-        const {data, error} = await supabase.from('categories').select()
+        const {data, error} = await supabase
+            .from('categories')
+            .select()
 
         if(error) {
             console.log(error)

@@ -22,7 +22,6 @@ export async function POST(req: Request) {
             if(error) {
                 console.log(error)
             }
-        console.log(data)
 
         return NextResponse.json({status: 200})
         

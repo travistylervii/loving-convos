@@ -9,8 +9,6 @@ const AdminPage = async () => {
   .from('scenarios')
   .select(`*, categories(name)`)
 
-  console.log(data)
-
   if (error) {
     console.log(error);
     return <>Data Error</>

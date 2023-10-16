@@ -13,116 +13,86 @@ interface ScenarioData {
   healthyconvo: any;
 }
 
-interface Props {
-  scenarioData: ScenarioData
+interface CategoryOptions {
+  id: number;
+  created_at: string;
+  name: string;
+  slug: string;
+  isChecked: boolean;
 }
 
-const ScenarioForm = (props:Props) => {
+interface Props {
+  scenarioData: ScenarioData;
+  setCategoryOptions: (value: any) => void;
+  categoryOptions: CategoryOptions[];
+  scenarioId: string
+}
 
+const ScenarioUpdateForm = (props: Props) => {
 
-  const {id, title, description, categories, unhealthyconvo, healthyconvo} = props.scenarioData
-  const { toast } = useToast()
+  const { categoryOptions, setCategoryOptions, scenarioData, scenarioId } =
+    props;
 
-  console.log(props)
+  const { title, description, unhealthyconvo, healthyconvo } = scenarioData;
+  const { toast } = useToast();
 
-  const { register, handleSubmit, setValue, formState: { errors }, } = useForm<ScenarioData>();
-
-  const [categoryOptions, setCategoryOptions] = useState([{
-    id: 0,
-    name: '',
-    slug: '',
-    isChecked: false
-  }])
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<ScenarioData>();
 
   const onSubmitDb: SubmitHandler<ScenarioData> = async (formData) => {
 
-    const dbRes = await fetch('/api/insertScenarioIntoDb', {
+    const { title, description, categories, unhealthyconvo, healthyconvo } =
+      formData;
 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            formData
-        })
+    const dbRes = await fetch("/api/upsertScenarioIntoDb", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: scenarioId,
+        title,
+        description,
+        categories,
+        unhealthyconvo,
+        healthyconvo,
+      }),
+    });
 
-    })
-
-    if(!dbRes.ok) {
-        return <>Not ok</>
+    if (!dbRes.ok) {
+      return <>Not ok</>;
     }
 
-    toast({title: "Great Success", description: "Your Scenario has been inserted into the database."})
-
+    toast({
+      title: "Great Success",
+      description: "Your Scenario has been inserted into the database.",
+    });
   };
 
-
   useEffect(() => {
-    
-    setValue('title', title)
-    setValue('description', description)
-    setValue('unhealthyconvo', JSON.stringify(unhealthyconvo, null, 2))
-    setValue('healthyconvo', JSON.stringify(healthyconvo, null, 2))
-
-  },[title, description, unhealthyconvo, healthyconvo, setValue])
-
-  useEffect(() => {
-
-    console.log("fetching Cats")
-    const getCategoriesfromDb = async () => {
-      const res = await fetch('/api/fetchCategories', {
-        method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // }
-      })
-
-      if(!res.ok) {
-        return <>No Cat data</>
-      }
-
-      const data = await res.json()
-      const categoryData = data.data
-
-      const mutatedCats = categoryData.map((cat) => {
-
-        const findCat = categories.some(catt => catt.id === cat.id)
-
-        if(findCat)
-        {
-          cat.isChecked = true
-        } else {
-          cat.isChecked = false
-        }
-
-        return cat
-
-      })
-
-      console.log(mutatedCats)
-
-      setCategoryOptions(mutatedCats)
-
-    }
-    getCategoriesfromDb()
-
-  },[])
+    setValue("title", title);
+    setValue("description", description);
+    setValue("unhealthyconvo", JSON.stringify(unhealthyconvo, null, 2));
+    setValue("healthyconvo", JSON.stringify(healthyconvo, null, 2));
+  }, [title, description, unhealthyconvo, healthyconvo, setValue]);
 
   const handleCheckChanged = (catId) => {
-
-    if(categoryOptions) {
+    if (categoryOptions) {
       const modifiedCategories = categoryOptions.map((cat) => {
-
-        if(cat.id === catId) {
-          return {...cat, isChecked: !cat.isChecked}
+        if (cat.id === catId) {
+          return { ...cat, isChecked: !cat.isChecked };
         } else {
-          return {...cat}
+          return { ...cat };
         }
-      })
+      });
 
-      setCategoryOptions(modifiedCategories)
+      setCategoryOptions(modifiedCategories);
     }
-  }
+  };
 
   return (
     <>
@@ -156,25 +126,23 @@ const ScenarioForm = (props:Props) => {
                     Category
                   </label>
                   <div className="mt-2">
-                   <ul>
-
-                      {categoryOptions && categoryOptions.map((cat) => {
-                        return (
-                          
-                        <li key={cat.id}>
-                          <input 
-                            type="checkbox" 
-                            value={cat.id} 
-                            checked={cat.isChecked} 
-                            {...register('categories')} 
-                            onChange={() => handleCheckChanged(cat.id)}
-                            /> {cat.name}
-                        </li>
-                        )
-                      })}
-                      
-                      </ul>
-              
+                    <ul>
+                      {categoryOptions &&
+                        categoryOptions.map((cat) => {
+                          return (
+                            <li key={cat.id}>
+                              <input
+                                type="checkbox"
+                                value={cat.id}
+                                checked={cat.isChecked}
+                                {...register("categories")}
+                                onChange={() => handleCheckChanged(cat.id)}
+                              />{" "}
+                              {cat.name}
+                            </li>
+                          );
+                        })}
+                    </ul>
                   </div>
                 </div>
 
@@ -243,4 +211,4 @@ const ScenarioForm = (props:Props) => {
   );
 };
 
-export default ScenarioForm;
+export default ScenarioUpdateForm;

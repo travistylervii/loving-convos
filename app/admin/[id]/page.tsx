@@ -1,6 +1,6 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import ScenarioFormPreview from "@/components/ScenarioFormPreview";
+import ScenarioFormPreview from "@/components/ScenarioUpdateFormPreview";
 
 const ScenarioDetailPage = async ({params}) => {
 
@@ -24,7 +24,7 @@ const ScenarioDetailPage = async ({params}) => {
     return ( 
 
         <>
-        <ScenarioFormPreview scenarioData={scenarioData}/>
+        <ScenarioFormPreview scenarioData={scenarioData} scenarioId={scenarioId}/>
         </>
      );
 }

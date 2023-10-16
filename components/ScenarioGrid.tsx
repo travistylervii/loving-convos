@@ -1,22 +1,32 @@
-import ScenarioButton from "@/components/ScenarioButton";
+'use client'
+
+import { useState } from 'react'
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
-export default async function ScenarioGrid() {
-  const supabase = createServerComponentClient({ cookies });
+import ConvoModal from './ScenarioModal';
+import ScenarioButton from "@/components/ScenarioButton";
 
-  const { data, error } = await supabase.from("scenarios").select();
+export default function ScenarioGrid(props) {
 
-  if (error) {
-    return <>Not Found</>;
-  }
+  const {scenarioData} = props;
+
+  const [modalData, setModalData] = useState()
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <>
+      {openModal && 
+      <ConvoModal openModal={openModal} setOpenModal={setOpenModal} modalData={modalData}  />}
+      
       <div className="grid grid-cols-2 py-10 gap-5 max-w-5xl mx-auto">
-        {data &&
-          data.map((scenario, i) => {
-            return <ScenarioButton key={i} scenarioData={scenario} />;
+        {scenarioData &&
+          scenarioData.map((scenario) => {
+            return (
+              <div key={scenario.id}>
+                <ScenarioButton scenarioData={scenario} setModalData={setModalData} openModal={openModal} setOpenModal={setOpenModal} />
+              </div>
+            );
           })}
       </div>
     </>

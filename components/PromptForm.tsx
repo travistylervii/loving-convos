@@ -37,15 +37,17 @@ const PromptForm = (props) => {
     const completionData = data.data;
 
     const finalPayload = {
+      id: 0,
       title: completionData.scenarioTitle,
       description: completionData.scenarioDescription,
       category: "",
-      unhealthyConvo: completionData.unhealthyConvoData,
-      healthyConvo: completionData.healthyConvoData,
+      unhealthyconvo: JSON.parse(completionData.unhealthyConvoData),
+      healthyconvo: JSON.parse(completionData.healthyConvoData),
     };
 
     setScenarioData(finalPayload);
   };
+
 
   return (
     <>

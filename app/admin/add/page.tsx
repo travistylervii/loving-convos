@@ -2,24 +2,17 @@
 
 import { useEffect, useState } from "react";
 import PromptForm from "@/components/PromptForm";
-import ScenarioForm from "@/components/ScenarioForm";
-import SignoutBtn from "@/components/SignoutBtn";
-import ConvoDisplay from "@/components/ConvoDisplay";
-import Switch from "@/components/SwitchBtn";
+import ScenarioFormPreview from "@/components/ScenarioFormPreview";
 
 const AddScenario = () => {
   const [scenarioData, setScenarioData] = useState({
+    id: 0,
     title: "",
     description: "",
     category: "",
-    unhealthyConvo: "",
-    healthyConvo: "",
+    unhealthyconvo: "",
+    healthyconvo: "",
   });
-  const [showPreview, setShowPreview] = useState(true);
-
-  useEffect(() => {
-    console.log(scenarioData);
-  }, [scenarioData]);
 
   return (
     <>
@@ -27,17 +20,7 @@ const AddScenario = () => {
 
       <div className="max-w-5xl mx-auto">
         <PromptForm setScenarioData={setScenarioData} />
-        <div className="flex justify-center items-center gap-3">
-          <Switch setShowPreview={setShowPreview} showPreview={showPreview} />
-          {showPreview ? <span>Preview</span> : <span>Code</span>}
-        </div>
-        <div>
-          {showPreview ? (
-            <ConvoDisplay scenarioData={scenarioData} />
-          ) : (
-            <ScenarioForm scenarioData={scenarioData} />
-          )}
-        </div>
+        <ScenarioFormPreview scenarioData={scenarioData}/>
       </div>
     </>
   );

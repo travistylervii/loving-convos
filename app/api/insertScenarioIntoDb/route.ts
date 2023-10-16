@@ -2,39 +2,69 @@ import { NextResponse } from "next/server"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 
-const supabase = createServerComponentClient({cookies})
 
 export async function POST(req: Request, res: Response) {
-
+    
     const { formData } = await req.json()
+    const {title, description, categories, unhealthyconvo, healthyconvo,} = formData
 
-    const {title, description, category, unhealthyConvo, healthyConvo,} = formData
-
+    console.log(categories)
+    
+    const supabase = createServerComponentClient({cookies})
+    
     try {
         
-        const {data, error} = await supabase
+
+        //Insert scenario into scanarios table
+        const {data: scenarioData, error: scenarioError} = await supabase
             .from('scenarios')
             .insert([{
                 title,
                 description,
-                category,
-                unhealthyconvo: JSON.parse(unhealthyConvo),
-                healthyconvo: JSON.parse(healthyConvo),
+                unhealthyconvo: JSON.parse(unhealthyconvo),
+                healthyconvo: JSON.parse(healthyconvo),
             }])
-            .select()
+            .select('id')
+            .single()
     
-        if(error) {
-            console.log(error)
+        if(scenarioError) {
+            console.log(scenarioError)
             throw Error()
         }
 
-        return NextResponse.json({status: 200, data})
+        console.log(scenarioData)
+
+        const scenarioId = scenarioData.id
+        
+        //create category payload. 
+        const categoryPayload = categories.map((catId) => {
+
+            return ({
+                'scenario_id': scenarioId,
+                'category_id': parseInt(catId)
+            })
+
+        })
+
+        console.log(categoryPayload)
+
+        //Insert scanario id and category ids into junction table
+        const {data: junctionData, error: juctionError} = await supabase 
+            .from('scenarios-categories')
+            .insert(categoryPayload)
+            .select()
+
+        if(juctionError) {
+            console.log(juctionError)
+            throw Error()
+        }
+
+        return NextResponse.json({status: 200})
     
     } catch(e) {
 
+        console.log("Error", e)
         return NextResponse.json({status: 500})
-
-    } finally {
 
     }
 

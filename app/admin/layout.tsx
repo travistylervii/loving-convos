@@ -21,6 +21,7 @@ export default async function AdminLayout({ children, }: { children: React.React
         <ul className="inline-flex gap-5">
           <li className="border border-border py-1 px-5 rounded-md"><a href="/admin/">View Scenarios</a></li>
           <li className="border border-border py-1 px-5 rounded-md"><a href="/admin/add">Add Scenario</a></li>
+          <li className="border border-border py-1 px-5 rounded-md"><a href="/admin/categories">Categories</a></li>
         </ul>
       </div>
         {children}

@@ -1,13 +1,14 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
-import { AiOutlineClose } from 'react-icons/ai'
+import { Fragment } from "react";
+import { Transition, Dialog } from "@headlessui/react";
+import { AiOutlineClose } from "react-icons/ai";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const ConvoModal = (props) => {
 
-  const { openModal, setOpenModal, healthyconvo, unhealthyconvo } = props;
+  const {openModal, setOpenModal, modalData} = props
+  const {unhealthyconvo, healthyconvo} = modalData
 
   return (
     <>
@@ -39,12 +40,7 @@ const ConvoModal = (props) => {
                 <Dialog.Panel className="relative transform overflow-scroll rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-h-[800px] sm:max-w-6xl sm:p-6">
                   <div>
                     <div className="mt-3 sm:mt-5">
-                      {/* <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900 text-center mb-5"
-                      >
-                        Example
-                      </Dialog.Title> */}
+                  
                       <div className="mt-2">
                         <div className="grid grid-cols-2 divide-x divide-slate-300">
                           <div className="col-span-1 px-6">

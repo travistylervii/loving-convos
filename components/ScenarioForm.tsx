@@ -2,24 +2,39 @@
 
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useToast } from "./ui/use-toast";
 
-interface Input {
+interface ScenarioData {
+  id?: number;
   title: string;
   description: string;
-  category: string;
-  unhealthyConvo: string;
-  healthyConvo: string;
+  categories: string[];
+  unhealthyconvo: any;
+  healthyconvo: any;
 }
 
-const ScenarioForm = (props) => {
+interface Props {
+  scenarioData: ScenarioData
+}
 
-  const {scenarioData} = props
+const ScenarioForm = (props:Props) => {
 
 
-  const { register, handleSubmit, setValue, formState: { errors }, } = useForm();
+  const {id, title, description, categories, unhealthyconvo, healthyconvo} = props.scenarioData
+  const { toast } = useToast()
 
-  const onSubmitDb: SubmitHandler<Input> = async (formData) => {
+  console.log(props)
 
+  const { register, handleSubmit, setValue, formState: { errors }, } = useForm<ScenarioData>();
+
+  const [categoryOptions, setCategoryOptions] = useState([{
+    id: 0,
+    name: '',
+    slug: '',
+    isChecked: false
+  }])
+
+  const onSubmitDb: SubmitHandler<ScenarioData> = async (formData) => {
 
     const dbRes = await fetch('/api/insertScenarioIntoDb', {
 
@@ -37,25 +52,77 @@ const ScenarioForm = (props) => {
         return <>Not ok</>
     }
 
+    toast({title: "Great Success", description: "Your Scenario has been inserted into the database."})
 
-    
   };
 
 
   useEffect(() => {
     
-    setValue('title', scenarioData.title)
-    setValue('description', scenarioData.description)
-    setValue('category', scenarioData.category)
-    setValue('unhealthyConvo', scenarioData.unhealthyConvo)
-    setValue('healthyConvo', scenarioData.healthyConvo)
+    setValue('title', title)
+    setValue('description', description)
+    setValue('unhealthyconvo', JSON.stringify(unhealthyconvo, null, 2))
+    setValue('healthyconvo', JSON.stringify(healthyconvo, null, 2))
 
-  },[scenarioData, setValue])
+  },[title, description, unhealthyconvo, healthyconvo, setValue])
 
+  useEffect(() => {
 
+    console.log("fetching Cats")
+    const getCategoriesfromDb = async () => {
+      const res = await fetch('/api/fetchCategories', {
+        method: 'GET',
+        // headers: {
+        //   'Content-Type': 'application/json'
+        // }
+      })
 
+      if(!res.ok) {
+        return <>No Cat data</>
+      }
 
-  
+      const data = await res.json()
+      const categoryData = data.data
+
+      const mutatedCats = categoryData.map((cat) => {
+
+        const findCat = categories.some(catt => catt.id === cat.id)
+
+        if(findCat)
+        {
+          cat.isChecked = true
+        } else {
+          cat.isChecked = false
+        }
+
+        return cat
+
+      })
+
+      console.log(mutatedCats)
+
+      setCategoryOptions(mutatedCats)
+
+    }
+    getCategoriesfromDb()
+
+  },[])
+
+  const handleCheckChanged = (catId) => {
+
+    if(categoryOptions) {
+      const modifiedCategories = categoryOptions.map((cat) => {
+
+        if(cat.id === catId) {
+          return {...cat, isChecked: !cat.isChecked}
+        } else {
+          return {...cat}
+        }
+      })
+
+      setCategoryOptions(modifiedCategories)
+    }
+  }
 
   return (
     <>
@@ -89,12 +156,25 @@ const ScenarioForm = (props) => {
                     Category
                   </label>
                   <div className="mt-2">
-                    <input
-                      type="text"
-                      {...register("category")}
-                      autoComplete="given-name"
-                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+                   <ul>
+
+                      {categoryOptions && categoryOptions.map((cat) => {
+                        return (
+                          
+                        <li key={cat.id}>
+                          <input 
+                            type="checkbox" 
+                            value={cat.id} 
+                            checked={cat.isChecked} 
+                            {...register('categories')} 
+                            onChange={() => handleCheckChanged(cat.id)}
+                            /> {cat.name}
+                        </li>
+                        )
+                      })}
+                      
+                      </ul>
+              
                   </div>
                 </div>
 
@@ -123,7 +203,7 @@ const ScenarioForm = (props) => {
                   </label>
                   <div className="mt-2">
                     <textarea
-                      {...register("unhealthyConvo")}
+                      {...register("unhealthyconvo")}
                       rows={10}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -139,7 +219,7 @@ const ScenarioForm = (props) => {
                   </label>
                   <div className="mt-2">
                     <textarea
-                      {...register("healthyConvo")}
+                      {...register("healthyconvo")}
                       rows={10}
                       className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />

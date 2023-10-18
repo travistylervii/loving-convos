@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import ScenarioFormPreview from "@/components/ScenarioUpdateFormPreview";
 
+export const dynamic = 'force-dynamic'
 
 const ScenarioDetailPage = async ({params}: {params: Params}) => {
 
@@ -25,7 +26,7 @@ const ScenarioDetailPage = async ({params}: {params: Params}) => {
     return ( 
 
         <>
-        <ScenarioFormPreview scenarioData={scenarioData} scenarioId={scenarioId}/>
+            <ScenarioFormPreview scenarioData={scenarioData} scenarioId={scenarioId}/>
         </>
      );
 }

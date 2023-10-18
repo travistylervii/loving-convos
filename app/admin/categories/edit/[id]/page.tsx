@@ -2,6 +2,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import CategoryForm from "@/components/CategoryUpdateForm";
 
+export const dynamic = 'force-dynamic'
 
 const EditCategory = async ({params}: {params: Params}) => {
 

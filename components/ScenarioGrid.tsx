@@ -11,6 +11,8 @@ export default function ScenarioGrid(props) {
 
   const {scenarioData} = props;
 
+  //console.log(scenarioData)
+
   const [modalData, setModalData] = useState()
   const [openModal, setOpenModal] = useState(false);
 

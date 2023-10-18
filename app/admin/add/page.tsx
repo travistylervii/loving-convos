@@ -5,6 +5,7 @@ import PromptForm from "@/components/PromptForm";
 import ScenarioFormPreview from "@/components/ScenarioAddFormPreview";
 
 const AddScenario = () => {
+
   const [scenarioData, setScenarioData] = useState({
     id: 0,
     title: "",

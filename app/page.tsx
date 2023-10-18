@@ -7,17 +7,7 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 import ScenarioGrid from "@/components/ScenarioGrid";
 
-type ScenarioData = {
-  id: number;
-  title: string;
-  description: string;
-  created_at: string;
-  healthyconvo: any;
-  unhealthyconvo: any;
-  categories: any;
-};
-
-function classNames(...classes) {
+function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -29,7 +19,7 @@ export default function Home() {
     id: 0,
     name: "Any Category",
   });
-  const [scenarioData, setScenarioData] = useState<ScenarioData[]>();
+  const [scenarioData, setScenarioData] = useState<ScenarioData[]>([]);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -77,8 +67,6 @@ export default function Home() {
 
       })
 
-      console.log("FILTERED")
-      console.log(filteredRes)
       setScenarioData(filteredRes);
     };
 

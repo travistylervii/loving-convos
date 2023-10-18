@@ -7,14 +7,18 @@ import { cookies } from "next/headers";
 import ConvoModal from './ScenarioModal';
 import ScenarioButton from "@/components/ScenarioButton";
 
-export default function ScenarioGrid(props) {
+type Props = {
+  scenarioData: ScenarioData[]
+}
+
+export default function ScenarioGrid(props: Props) {
 
   const {scenarioData} = props;
 
-  //console.log(scenarioData)
+  console.log(scenarioData)
 
-  const [modalData, setModalData] = useState()
-  const [openModal, setOpenModal] = useState(false);
+  const [modalData, setModalData] = useState<ScenarioData>()
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   return (
     <>
@@ -26,7 +30,7 @@ export default function ScenarioGrid(props) {
           scenarioData.map((scenario) => {
             return (
               <div key={scenario.id}>
-                <ScenarioButton scenarioData={scenario} setModalData={setModalData} openModal={openModal} setOpenModal={setOpenModal} />
+                <ScenarioButton scenarioData={scenario} setModalData={setModalData} setOpenModal={setOpenModal} />
               </div>
             );
           })}

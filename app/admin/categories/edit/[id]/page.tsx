@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import CategoryForm from "@/components/CategoryUpdateForm";
 
 
-const EditCategory = async ({params}) => {
+const EditCategory = async ({params}: {params: Params}) => {
 
     const { id } = params
 

@@ -1,18 +1,7 @@
 "use client";
 
 import { AiOutlineHeart } from "react-icons/ai";
-import { CheckIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { useEffect } from "react";
-
-interface ScenarioData {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  healthyconvo: string;
-  unhealthyconvo: string;
-}
 
 interface Props {
   setOpenModal: (value: boolean) => void
@@ -31,7 +20,7 @@ const ConvoButton = (props: Props) => {
   const handleModal = () => {
 
     setOpenModal(false)
-    setModalData(props.scenarioData)
+    setModalData(scenarioData)
     setOpenModal(true)
 
   }

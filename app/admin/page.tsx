@@ -28,7 +28,7 @@ const AdminPage = async () => {
               </a>
               
               {scenario.title} | 
-              {scenario.categories.map((category, i) => {
+              {scenario.categories.map((category: CategoriesData, i: number) => {
                 return (
                 <span key={i} className="text-gray-400">
                   #{category.name}

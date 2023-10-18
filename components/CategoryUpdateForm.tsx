@@ -9,7 +9,11 @@ interface Inputs {
     slug: string;
 }
 
-const CategoryUpdateForm = (props) => {
+type Props = {
+  categoryData: CategoriesData
+}
+
+const CategoryUpdateForm = (props: Props) => {
 
     const {categoryData} = props
     const {id, name, slug} = categoryData
@@ -46,8 +50,12 @@ const CategoryUpdateForm = (props) => {
     }
 
     useEffect(() => {
+
+      if(name && slug) {
         setValue('name', name)
         setValue('slug', slug)
+      }
+
     },[setValue, name, slug])
 
     return ( 

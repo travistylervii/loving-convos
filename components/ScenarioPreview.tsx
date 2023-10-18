@@ -1,7 +1,6 @@
 "use client";
 
-import { Fragment, useState, useEffect } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { useState, useEffect } from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -9,7 +8,11 @@ const unhealthyconvoTestData = "{\n \"convo\": [\n {\n \"name\": \"Emma\",\n \"t
 
 const healthyconvoTestData = "{\n \"convo\": [\n {\n \"name\": \"Emma\",\n \"text\": \"David, I've noticed that you don't take out the trash as often as I do. I'm feeling a bit overwhelmed with doing the house chores, can we discuss it?\"\n },\n {\n \"name\": \"David\",\n \"text\": \"I'm sorry you're feeling that way, Emma. I didn't realize that it was putting so much pressure on you. Let's find a way to share the chores more equally.\"\n },\n {\n \"name\": \"Emma\",\n \"text\": \"Thank you for understanding, David. It's not about the trash itself, but about feeling like I do more chores and that my efforts are taken for granted.\"\n },\n {\n \"name\": \"David\",\n \"text\": \"I understand, Emma. I'll try to pitch in more with the chores. Your efforts and feelings matter to me.\"\n },\n {\n \"name\": \"Emma\",\n \"text\": \"Thank you, David. Let's make a plan on how we can divide the chores equally.\"\n },\n {\n \"name\": \"David\",\n \"text\": \"Absolutely. It's crucial we share responsibilities in our relationship. We'll divide the chores fairly.\"\n }\n ],\n \"breakdown\": {\n \"points\": [\n {\n \"pointTitle\": \"Expessing Feelings\",\n \"pointText\": \"Emma voices her feelings without blame, creating a space for open dialogue.\"\n },\n {\n \"pointTitle\": \"Apology & Problem-Solving\",\n \"pointText\": \"David acknowledges Emma's feelings, apologizes and suggests a possible solution.\"\n },\n {\n \"pointTitle\": \"Clarifying the Issue\",\n \"pointText\": \"Emma explains the underlying issue, promoting mutual understanding and addressing the core problem.\"\n },\n {\n \"pointTitle\": \"Valuing Feelings & Efforts\",\n \"pointText\": \"David assures Emma that her efforts and feelings are valued, promising to contribute more to house chores.\"\n },\n {\n \"pointTitle\": \"Solution Oriented\",\n \"pointText\": \"Both parties discuss a practical plan for dividing chores, addressing the problem at hand.\"\n }\n ],\n \"summary\": \"In conclusion, the breakdown of Emma and David's conversation emphasizes the importance of expressing feelings, acknowledging these feelings and arriving at solutions. Emma approaches the situation without throwing blame, and David promptly acknowledges the problem and expresses his willingness to help. The conversation concludes with the couple agreeing on a plan to ensure chores are distributed equally, showing their mutual commitment to resolving the issue.\"\n }\n}"
 
-const ConvoDisplay = (props) => {
+type Props = {
+  scenarioData: FormScenarioData
+}
+
+const ConvoDisplay = (props:Props) => {
 
   const { scenarioData } = props;
   const {title, description, unhealthyconvo, healthyconvo} = scenarioData
@@ -50,7 +53,7 @@ const ConvoDisplay = (props) => {
           </h3>
 
           <ul>
-            {previewData.unhealthyconvo.convo.map((message, i) => {
+            {previewData.unhealthyconvo.convo.map((message: Convo, i: number) => {
               if (message.name === "David") {
                 return (
                 
@@ -95,7 +98,7 @@ const ConvoDisplay = (props) => {
             This conversation showcases several elements of an unhealthy conversation:
             </h4>
             <ul className="list-disc pl-5">
-              {previewData.unhealthyconvo.breakdown.points.map((point, i) => {
+              {previewData.unhealthyconvo.breakdown.points.map((point: Points, i: number) => {
                 return (
                 
                     <li key={i} className="my-2">
@@ -122,7 +125,7 @@ const ConvoDisplay = (props) => {
           </h3>
 
           <ul>
-            {previewData.healthyconvo.convo.map((message, i) => {
+            {previewData.healthyconvo.convo.map((message: Convo, i: number) => {
               if (message.name === "David") {
                 return (
                 
@@ -167,7 +170,7 @@ const ConvoDisplay = (props) => {
             This conversation showcases several elements of a healthy conversation:
             </h4>
             <ul className="list-disc pl-5">
-              {previewData.healthyconvo.breakdown.points.map((point, i) => {
+              {previewData.healthyconvo.breakdown.points.map((point: Points, i: number) => {
                 return (
                  
                     <li key={i} className="my-2">

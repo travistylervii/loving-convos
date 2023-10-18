@@ -35,7 +35,7 @@ export async function POST(req: Request, res: Response) {
         const scenarioId = scenarioData.id
         
         //create category payload. 
-        const categoryPayload = categories.map((catId) => {
+        const categoryPayload = categories.map((catId: string) => {
 
             return ({
                 'scenario_id': scenarioId,

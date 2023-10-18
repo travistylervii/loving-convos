@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PromptForm from "@/components/PromptForm";
 import ScenarioFormPreview from "@/components/ScenarioAddFormPreview";
 
 const AddScenario = () => {
 
-  const [scenarioData, setScenarioData] = useState({
+  const [scenarioData, setScenarioData] = useState<FormScenarioData>({
     id: 0,
     title: "",
     description: "",
-    category: "",
     unhealthyconvo: "",
     healthyconvo: "",
   });

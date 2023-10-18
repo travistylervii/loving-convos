@@ -1,6 +1,11 @@
 import { Switch } from "@headlessui/react";
 
-const SwitchBtn = (props) => {
+type Props = {
+  showPreview: boolean,
+  setShowPreview: (value: boolean) => void
+ }
+
+const SwitchBtn = (props: Props) => {
 
   const {showPreview, setShowPreview} = props
 

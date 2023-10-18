@@ -8,8 +8,13 @@ import LoadingSpinner from "./LoadingSpinner";
 interface Input {
   prompt: string;
 }
-//Emma doesn't like being around David parents as they are rude and somewhat mean to her, but Emma doesn't know how to address it with David
-const PromptForm = (props) => {
+
+type Props = {
+  setScenarioData: (value: any) => void
+}
+
+
+const PromptForm = (props: Props) => {
 
   const { setScenarioData } = props;
   const { toast } = useToast()
@@ -47,8 +52,8 @@ const PromptForm = (props) => {
     const finalPayload = {
       id: 0,
       title: completionData.scenarioTitle,
+      categories: [],
       description: completionData.scenarioDescription,
-      category: "",
       unhealthyconvo: JSON.parse(completionData.unhealthyConvoData),
       healthyconvo: JSON.parse(completionData.healthyConvoData),
     };

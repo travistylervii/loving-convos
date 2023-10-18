@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
-import ConvoModal from './ScenarioModal';
+import ScenarioModal from './ScenarioModal';
 import ScenarioButton from "@/components/ScenarioButton";
 
 type Props = {
@@ -17,13 +15,14 @@ export default function ScenarioGrid(props: Props) {
 
   console.log(scenarioData)
 
-  const [modalData, setModalData] = useState<ScenarioData>()
+  const [modalData, setModalData] = useState<any>()
   const [openModal, setOpenModal] = useState<boolean>(false);
+
 
   return (
     <>
-      {openModal && 
-      <ConvoModal openModal={openModal} setOpenModal={setOpenModal} modalData={modalData}  />}
+      {openModal &&
+      <ScenarioModal openModal={openModal} setOpenModal={setOpenModal} modalData={modalData}  />}
       
       <div className="grid grid-cols-2 py-10 gap-5 max-w-5xl mx-auto">
         {scenarioData &&

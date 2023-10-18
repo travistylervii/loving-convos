@@ -5,8 +5,12 @@ import ScenarioAddForm from "@/components/ScenarioAddForm";
 import ConvoDisplay from "@/components/ScenarioPreview";
 import Switch from "@/components/SwitchBtn";
 
+type Props = {
+  scenarioData: FormScenarioData
+}
 
-const ScenarioAddFormPreview = (props) => {
+
+const ScenarioAddFormPreview = (props: Props) => {
 
   const [categoryOptions, setCategoryOptions] = useState([{
     id: 0,
@@ -30,7 +34,9 @@ const ScenarioAddFormPreview = (props) => {
       const data = await res.json()
       const categoryData = data.data
 
-      const mutatedCats = categoryData.map((cat) => {
+      const mutatedCats = categoryData.map((cat: CategoriesData) => {
+
+        console.log(cat)
 
         cat.isChecked = false
 

@@ -1,31 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useToast } from "./ui/use-toast";
 
-interface ScenarioData {
-  id?: number;
-  title: string;
-  description: string;
-  categories: string[];
-  unhealthyconvo: any;
-  healthyconvo: any;
-}
-
-interface CategoryOptions {
-  id: number,
-  created_at: string,
-  name: string,
-  slug: string,
-  isChecked: boolean
-}
 
 interface Props {
-  scenarioData: ScenarioData
-  setCategoryOptions: (value: any) => void
-  categoryOptions: CategoryOptions[]
+  scenarioData: FormScenarioData;
+  setCategoryOptions: (value: any) => void;
+  categoryOptions: CategoriesData[];
 }
+
 
 const ScenarioAddForm = (props:Props) => {
 
@@ -33,10 +18,10 @@ const ScenarioAddForm = (props:Props) => {
   const {title, description, unhealthyconvo, healthyconvo} = scenarioData
   const { toast } = useToast()
 
-  const { register, handleSubmit, setValue, formState: { errors }, } = useForm<ScenarioData>();
+  const { register, handleSubmit, setValue, formState: { errors }, } = useForm<FormScenarioData>();
 
 
-  const onSubmitDb: SubmitHandler<ScenarioData> = async (formData) => {
+  const onSubmitDb: SubmitHandler<FormScenarioData> = async (formData) => {
 
     const { title, description, categories, unhealthyconvo, healthyconvo } =
       formData;
@@ -77,7 +62,7 @@ const ScenarioAddForm = (props:Props) => {
   },[title, description, unhealthyconvo, healthyconvo, setValue])
 
 
-  const handleCheckChanged = (catId) => {
+  const handleCheckChanged = (catId: number) => {
 
     if(categoryOptions) {
       const modifiedCategories = categoryOptions.map((cat) => {

@@ -5,14 +5,19 @@ import ScenarioUpdateForm from "@/components/ScenarioUpdateForm";
 import ConvoDisplay from "@/components/ScenarioPreview";
 import Switch from "@/components/SwitchBtn";
 
-const ScenarioUpdateFormPreview = (props) => {
+type Props = {
+  scenarioData: FormScenarioData,
+  scenarioId: string
+}
+
+const ScenarioUpdateFormPreview = (props: Props) => {
   
   const { scenarioData, scenarioId } = props;
   
   const [showPreview, setShowPreview] = useState(true);
   const [categoryOptions, setCategoryOptions] = useState([
     {
-      id: scenarioId,
+      id: parseInt(scenarioId),
       created_at: "",
       name: "",
       slug: "",
@@ -33,9 +38,9 @@ const ScenarioUpdateFormPreview = (props) => {
       const data = await res.json();
       const categoryData = data.data;
 
-      const mutatedCats = categoryData.map((cat) => {
+      const mutatedCats = categoryData.map((cat: CategoriesData) => {
 
-        const foundCat = scenarioData.categories.some(sCat => sCat.id === cat.id)
+        const foundCat = scenarioData.categories?.some(sCat => sCat.id === cat.id)
       
         if(foundCat) {
           cat.isChecked = true;

@@ -5,10 +5,23 @@ import { Transition, Dialog } from "@headlessui/react";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
-const ConvoModal = (props) => {
+type Props = {
+  openModal: boolean,
+  setOpenModal: (value: boolean) => void
+  modalData: ScenarioData
+}
+
+const ScenarioModal = (props: Props) => {
 
   const {openModal, setOpenModal, modalData} = props
+ 
+  if(!modalData) {
+    return <>No Modal Data</>
+  }
+ 
   const {unhealthyconvo, healthyconvo} = modalData
+
+  console.log(modalData)
 
   return (
     <>
@@ -196,4 +209,4 @@ const ConvoModal = (props) => {
   );
 };
 
-export default ConvoModal;
+export default ScenarioModal;

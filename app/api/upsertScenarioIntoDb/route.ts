@@ -2,13 +2,20 @@ import { NextResponse } from "next/server"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 
+type UpsertPayload = {
+    id?: number;
+    title: any; 
+    description: any; 
+    unhealthyconvo: any; 
+    healthyconvo: any; 
+  }
 
 export async function POST(req: Request, res: Response) {
     
     const {id, title, description, categories, unhealthyconvo, healthyconvo,} = await req.json()
     const supabase = createServerComponentClient({cookies})
     
-    let upsertPayload = {
+    let upsertPayload: UpsertPayload = {
         title,
         description,
         unhealthyconvo: JSON.parse(unhealthyconvo),
@@ -36,7 +43,7 @@ export async function POST(req: Request, res: Response) {
 
         
         //create category payload. 
-        const categoryPayload = categories.map((catId) => {
+        const categoryPayload = categories.map((catId: string) => {
 
             return ({
                 'scenario_id': scenarioData.id,

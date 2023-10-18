@@ -4,9 +4,10 @@ type Params = {
 
 type CategoriesData = {
     id: number,
-    created_at?: Date,
-    name: string,
-    slug: string,
+    created_at?: Date | string,
+    name?: string,
+    slug?: string,
+    isChecked?: boolean,
 }
 
 type Points = {
@@ -36,10 +37,20 @@ type HealthyConvo = {
 
 type ScenarioData = {
     id: number,
-    created_at: string,
+    created_at?: Date | string,
     title: string,
     description: string,
     unhealthyconvo: UnhealthyConvo,
     healthyconvo: HealthyConvo,
-    categories: CategoriesData[]
+    categories?: CategoriesData[]
+}
+
+type FormScenarioData = {
+    id: number,
+    created_at?: Date | string,
+    title: string,
+    description: string,
+    unhealthyconvo: string,
+    healthyconvo: string,
+    categories?: CategoriesData[]
 }

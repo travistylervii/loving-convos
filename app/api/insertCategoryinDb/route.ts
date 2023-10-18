@@ -7,7 +7,6 @@ export async function POST(req: Request) {
     const {formPayload} = await req.json()
     const {name, slug} = formPayload
 
-    console.log(formPayload)
 
     const supabase = createServerComponentClient({cookies})
 

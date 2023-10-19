@@ -1,12 +1,11 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";;
 import CategoriesList from "@/components/CategoriesList";
 
 export const dynamic = 'force-dynamic'
 
 const CategoriesPage = async () => {
 
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
     const {data} = await supabase.from('categories').select()
 
     if(!data) {

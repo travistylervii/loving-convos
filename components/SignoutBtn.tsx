@@ -1,11 +1,13 @@
 'use client'
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { supabaseClientClient } from "@/lib/supabase/supabaseClient"
 import { useToast } from "./ui/use-toast"
+import {useRouter} from "next/navigation"
 
 const SignoutBtn = () => {
 
-    const supabase = createClientComponentClient()
+    const supabase = supabaseClientClient()
+    const router = useRouter()
     const { toast } = useToast()
 
     const handleSignout = async () => {
@@ -15,10 +17,13 @@ const SignoutBtn = () => {
         if(error) {
             toast({title: "Error", description: "Could not sign out"})
         }
+
+        router.push('/')
+        
     }
 
     return ( 
-        <button onClick={() => {handleSignout}}>Signout</button>
+        <button onClick={handleSignout}>Signout</button>
      );
 }
  

@@ -1,14 +1,12 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import CategoryForm from "@/components/CategoryUpdateForm";
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";;
 
-export const dynamic = 'force-dynamic'
+import CategoryForm from "@/components/CategoryUpdateForm";
 
 const EditCategory = async ({params}: {params: Params}) => {
 
     const { id } = params
 
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
     const {data} = await supabase.from('categories').select().eq('id', id).single()
 
     if(!data) {

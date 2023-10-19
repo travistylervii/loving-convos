@@ -1,12 +1,9 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
 import { NextResponse } from "next/server";
-
-export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request, res: Response) {
 
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
 
     try {
 

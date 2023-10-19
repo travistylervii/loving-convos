@@ -1,8 +1,6 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
-
-export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request) {
 
@@ -10,7 +8,7 @@ export async function POST(req: Request) {
     const {name, slug} = formPayload
 
 
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
 
     try {
 

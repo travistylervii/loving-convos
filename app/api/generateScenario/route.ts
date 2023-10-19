@@ -170,6 +170,7 @@ const scenarioUserPrompt = prompt
         // presence_penalty: 0,
     });
 
+
     const healthyConvoData = chatCompletion2.choices[0].message.content;
 
     //Create a healthy title and description
@@ -178,7 +179,7 @@ const scenarioUserPrompt = prompt
         messages: [
             {
                 "role": 'system',
-                "content": `Create a title (less than 4 words) and description (less than 20 words) based on the user content and return the data in this JSON format example. Ignore the values in the example, just use the objext structure: 
+                "content": `Create a title (in 3 or 4 words) and description (in 25 words) on the specifics of the conversation and output the data in this JSON structure below. Ignore the breakdown and summary, just focus on the convo. Below is an example of the JSON structure: 
                 {
                     "title": 'Impulse Spending',
                     "description: 'In this scenario, David and Emma have a conversation about impulse spending in their relationship'

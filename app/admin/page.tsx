@@ -1,9 +1,8 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { Edit } from "lucide-react";
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
+import ScenarioTable from "@/components/admin/ScenarioTable";
 
 const AdminPage = async () => {
-  const supabase = createServerComponentClient({ cookies });
+  const supabase = supabaseServerClient()
   
   let { data, error } = await supabase
   .from('scenarios')
@@ -14,31 +13,11 @@ const AdminPage = async () => {
     return <>Data Error</>
   }
 
+
   return (
     <>
       <h1 className="text-center text-4xl mb-10">Admin</h1>
-      <ul>
-        {data &&
-          data.map((scenario, i) => {
-
-            return (
-            <li key={scenario.id} className="py-1 flex items-center gap-3">
-              <a href={`/admin/${scenario.id}`}>
-                <Edit size={15} />
-              </a>
-              
-              {scenario.title} | 
-              {scenario.categories.map((category: CategoriesData, i: number) => {
-                return (
-                <span key={i} className="text-gray-400">
-                  #{category.name}
-                </span>
-                )
-              })}
-            </li>
-            );
-          })}
-      </ul>
+      <ScenarioTable scenarioData={data} />
     </>
   );
 };

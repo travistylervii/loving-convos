@@ -28,7 +28,6 @@ const CategoryUpdateForm = (props: Props) => {
             slug: data.slug,
         }
 
-        console.log(formPayload)
 
         const res = await fetch('/api/updateCategoryinDb', {
             method: 'POST',

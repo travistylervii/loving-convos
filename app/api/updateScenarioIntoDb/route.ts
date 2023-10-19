@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
 import { cookies } from "next/headers"
-
-export const dynamic = 'force-dynamic'
 
 export async function POST(req: Request, res: Response) {
     
@@ -10,7 +8,7 @@ export async function POST(req: Request, res: Response) {
     const {title, description, categories, unhealthyconvo, healthyconvo,} = formData
 
     
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
     
     try {
         

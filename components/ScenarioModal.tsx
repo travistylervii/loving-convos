@@ -19,9 +19,7 @@ const ScenarioModal = (props: Props) => {
     return <>No Modal Data</>
   }
  
-  const {unhealthyconvo, healthyconvo} = modalData
-
-  console.log(modalData)
+  const {title, description, unhealthyconvo, healthyconvo} = modalData
 
   return (
     <>
@@ -39,7 +37,7 @@ const ScenarioModal = (props: Props) => {
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="fixed inset-0 z-10 w-screen overflow-scroll">
             <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
               <Transition.Child
                 as={Fragment}
@@ -50,9 +48,13 @@ const ScenarioModal = (props: Props) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-scroll rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-h-[800px] sm:max-w-6xl sm:p-6">
+                <Dialog.Panel className="relative transform bg-white shadow-xl transition-all sm:w-full sm:max-h-fit sm:max-w-6xl sm:p-10">
                   <div>
-                    <div className="mt-3 sm:mt-5">
+                    <div className="text-center">
+                    <h1 className="text-3xl font-bold text-slate-700 pb-2">{title}</h1>
+                    <p>{description}</p>
+                    </div>
+                    <div className="mt-3 sm:mt-5 text-left">
                   
                       <div className="mt-2">
                         <div className="grid grid-cols-2 divide-x divide-slate-300">
@@ -64,9 +66,6 @@ const ScenarioModal = (props: Props) => {
 
                             <ul>
                               {unhealthyconvo.convo.map((message) => {
-
-                                
-
                                 if (message.name === "David") {
                                   return (
                                     <>

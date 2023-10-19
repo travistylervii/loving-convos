@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
 import { cookies } from "next/headers"
 
-export const dynamic = 'force-dynamic'
 
 type UpsertPayload = {
     id?: number;
@@ -15,7 +14,7 @@ type UpsertPayload = {
 export async function POST(req: Request, res: Response) {
     
     const {id, title, description, categories, unhealthyconvo, healthyconvo,} = await req.json()
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
     
     let upsertPayload: UpsertPayload = {
         title,

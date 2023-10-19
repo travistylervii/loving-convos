@@ -1,5 +1,4 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { supabaseServerClient } from "@/lib/supabase/supabaseServer";
 import ScenarioFormPreview from "@/components/ScenarioUpdateFormPreview";
 
 export const dynamic = 'force-dynamic'
@@ -8,7 +7,7 @@ const ScenarioDetailPage = async ({params}: {params: Params}) => {
 
     const scenarioId = params.id
 
-    const supabase = createServerComponentClient({cookies})
+    const supabase = supabaseServerClient()
 
     const {data, error} = await supabase
         .from('scenarios')

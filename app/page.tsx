@@ -40,7 +40,6 @@ export default function Home() {
 
   useEffect(() => {
 
-    setScenarioData(defaultData);
     const loadScenarios = async () => {
 
       let query = supabase.from("scenarios")

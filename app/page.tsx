@@ -7,6 +7,8 @@ import SearchBar from "@/components/SearchBar";
 
 import ScenarioGrid from "@/components/ScenarioGrid";
 
+export const revalidate = 3600
+
 export default function Home() {
 
   const supabase = createClientComponentClient();
@@ -44,7 +46,8 @@ export default function Home() {
 
       let query = supabase.from("scenarios")
         .select(`*, categories(*)`)
-        .or(`description.ilike.%${searchTerm}%,title.ilike.%${searchTerm}%`);
+        .or(`description.ilike.%${searchTerm}%,title.ilike.%${searchTerm}%`)
+        .range(0,19);
 
       if(selectedCategory.id !== 0) {
         query = query.eq('categories.id', selectedCategory.id)
